@@ -230,13 +230,14 @@ unsigned long int Erg::getSecondsIntoThePiece()
 }
 
 
-unsigned long int Erg::getDisplayedTime()
+double Erg::getDisplayedTime()
 {
     UINT16_T rspDataSize=64;
     UINT32_T rspData[64];
     UINT32_T cmd[]={0x1a, 0x01, 0xa0};
-    doCsafeCommand( "getWorkTime", 3,  cmd, rspDataSize, rspData ) ;
-    return  ((((rspData[7] << 8 ) + (rspData[6] ) << 8 ) + (rspData[5] ) << 8) + rspData[4])/100;
+    doCsafeCommand( "getWorkTime", 3,  cmd, rspDataSize, rspData );
+    double displayedTime = ((((rspData[7] << 8 ) + (rspData[6] ) << 8 ) + (rspData[5] ) << 8) + rspData[4] + rspData[8]) / 100.0; //in .nn seconds
+    return displayedTime;
 }
 
 
@@ -268,16 +269,15 @@ int Erg::getAccumulatedCalories()
 }
 
 
-unsigned long int Erg::getDisplayedMeters()
+double Erg::getDisplayedMeters()
 {
     // pm3 specific
     UINT16_T rspDataSize=64;
     UINT32_T rspData[64];
     UINT32_T cmd[]={0x1a, 0x01, 0xa3};
-    doCsafeCommand( "getDisplayedMeters", 3,  cmd, rspDataSize, rspData ) ;
-    //return  (((rspData[7] << 8 ) + (rspData[6] ) << 8 ) + (rspData[5] ) << 8) + rspData[4]; // in tenths of meter
-    long int meters =   ((((rspData[7] << 8 ) + (rspData[6] ) << 8 ) + (rspData[5] ) << 8) + rspData[4])/10;
-    log("getDisplayedMeters()=%d", meters);
+    doCsafeCommand( "get_workdistance ", 3,  cmd, rspDataSize, rspData );
+    double meters = ((((rspData[7] << 8) + (rspData[6]) << 8) + (rspData[5]) << 8) + rspData[4] + rspData[8]) / 10.0; // in tenths of meter
+    log("get_workdistance()=%d", meters);
     return meters;
 }
 

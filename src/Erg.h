@@ -202,14 +202,14 @@ public:
 
     //time stuff
     unsigned long int getTargetTime(); // returns the number of seconds in a fixed-time piece or ErgState::NO_TIME if the workout does not have this, only valid after call to start()
-    unsigned long int getDisplayedTime(); // in seconds as displayed on PM3, pm3 command, may count up or down, continues to count up/down if rower stops on a set distance/time piece, stops counting on just row if rower stops, only valid after call to start()
+    double getDisplayedTime(); // in seconds as displayed on PM3, pm3 command, may count up or down, continues to count up/down if rower stops on a set distance/time piece, stops counting on just row if rower stops, only valid after call to start()
     unsigned long int getSecondsIntoThePiece(); // time into piece, csafe, counts up always, will stop counting if rower stops on a set time/dist piece, goes to zero if just row and rower stops
     void getTimeIntoThePiece( int *hours, int *min, int *sec); // same as getSecondsIntoThePiece but broken out
 
     // distance
     unsigned long int getTargetDistance(); // returns the number of meters in a fixed-distance piece or ErgState::NO_METERS if the workout does not have this
     unsigned long getDistanceRowedSoFar(); // meters rowed, always counts up
-    unsigned long int getDisplayedMeters(); // echos displayed meters on PM3, may count down
+    double getDisplayedMeters(); // echos displayed meters on PM3, may count down. returns fractional meters up to .1m
 
 
 
